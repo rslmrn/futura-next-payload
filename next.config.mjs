@@ -6,8 +6,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["www.futura-next-payload.vercel.app"],
-    domains: ["utfs.io"],
+    domains: ["www.futura-next-payload.vercel.app", "utfs.io"],
   },
 };
 
