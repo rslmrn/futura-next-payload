@@ -70,10 +70,12 @@
     "zustand": "^4.5.4"
   },
   "overrides": {
-    "drizzle-kit": "0.20.14"
+    "drizzle-kit": "0.20.14",
+    "@types/minimatch": "5.1.2"
   },
   "devDependencies": {
     "@payloadcms/graphql": "3.0.0-beta.65",
+    "@types/minimatch": "5.1.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
