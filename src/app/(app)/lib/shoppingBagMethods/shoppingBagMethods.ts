@@ -1,15 +1,9 @@
 import { getPayloadHMR } from "@payloadcms/next/utilities";
 import configPromise from "@payload-config";
-import {
-  base64Placeholder,
-  buildImageUrl,
-  processDataCart,
-} from "../../utils/utils";
+import { base64Placeholder, processDataCart } from "../../utils/utils";
 import getBase64 from "../../api/getBase64";
 
 const payload = await getPayloadHMR({ config: configPromise });
-
-const { NEXT_PUBLIC_BASE_URL } = process.env;
 
 export async function getCart(userId: any) {
   if (!userId) {
@@ -65,7 +59,7 @@ export async function createCart(userId: any, item: any) {
             catalogItem: item.id,
             quantity: 1,
             mainImageUrl: item.mainImageUrl,
-            base64: NEXT_PUBLIC_BASE_URL
+            base64: item.mainImageUrl
               ? await getBase64(item.mainImageUrl)
               : base64Placeholder,
           },
@@ -114,8 +108,8 @@ export async function updateCart(userId: any, shoppingBag: any) {
           catalogItem: item.catalogItem.id,
           quantity: item.quantity ? item.quantity : 1,
           mainImageUrl: item.mainImageUrl,
-          base64: NEXT_PUBLIC_BASE_URL
-            ? getBase64(buildImageUrl(item.catalogItem?.mainImage?.url))
+          base64: item.catalogItem?.mainImage?.url
+            ? getBase64(item.catalogItem?.mainImage?.url)
             : base64Placeholder,
         });
         return item;

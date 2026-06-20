@@ -65,8 +65,12 @@
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "vercel": "^54.14.2",
     "zod": "^3.23.8",
     "zustand": "^4.5.4"
+  },
+  "overrides": {
+    "drizzle-kit": "0.20.14"
   },
   "devDependencies": {
     "@payloadcms/graphql": "3.0.0-beta.65",

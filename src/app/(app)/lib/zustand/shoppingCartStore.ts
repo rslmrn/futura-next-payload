@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { base64Placeholder, buildImageUrl } from "../../utils/utils";
+import { base64Placeholder } from "../../utils/utils";
 
 interface StoreState {
   userId: string | null;
@@ -46,7 +46,7 @@ export const useStoreShoppingCart = create<StoreState>((set) => ({
       const newItem = {
         catalogItem: item,
         quantity: 1,
-        mainImageUrl: buildImageUrl(item.mainImage.url),
+        mainImageUrl: item.mainImage.url,
         base64: base64Placeholder,
       };
       const itemExists = state.shoppingBag.items.some(

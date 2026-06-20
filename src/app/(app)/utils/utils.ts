@@ -73,17 +73,11 @@ export const handleWhatsAppMessage = (data: any, shoppingBag: any) => {
 export const base64Placeholder =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/ANra4Pz8/ODf4M3O1ADj4+Ruc3YyLi1oYWEAW1pbAQUFAgECY2FjAI+Ok3JwdLGvtNjX3v2XGj2mfgmhAAAAAElFTkSuQmCC";
 
-const { NEXT_PUBLIC_BASE_URL } = process.env;
-
-export const buildImageUrl = (url: string) => {
-  return `${NEXT_PUBLIC_BASE_URL ?? ""}${url}`;
-};
-
 export const processData = async (catalog: any) => {
   return Promise.all(
     catalog.docs.map(async (item: any) => {
-      const mainImageUrl = buildImageUrl(item.mainImage?.url);
-      const base64 = NEXT_PUBLIC_BASE_URL
+      const mainImageUrl = item.mainImage?.url;
+      const base64 = mainImageUrl
         ? await getBase64(mainImageUrl)
         : base64Placeholder;
       item.mainImageUrl = mainImageUrl;
@@ -96,8 +90,8 @@ export const processData = async (catalog: any) => {
 export const processDataCart = async (cart: any) => {
   return Promise.all(
     cart.docs[0]?.items?.map(async (item: any) => {
-      const mainImageUrl = buildImageUrl(item.catalogItem?.mainImage?.url);
-      const base64 = NEXT_PUBLIC_BASE_URL
+      const mainImageUrl = item.catalogItem?.mainImage?.url;
+      const base64 = mainImageUrl
         ? await getBase64(mainImageUrl)
         : base64Placeholder;
       item.mainImageUrl = mainImageUrl;
@@ -116,8 +110,8 @@ export const processDataCart = async (cart: any) => {
 export const processDataCrew = async (crew: any) => {
   return Promise.all(
     crew.docs.map(async (item: any) => {
-      const mainImageUrl = buildImageUrl(item.mainImage?.url);
-      const base64 = NEXT_PUBLIC_BASE_URL
+      const mainImageUrl = item.mainImage?.url;
+      const base64 = mainImageUrl
         ? await getBase64(mainImageUrl)
         : base64Placeholder;
       item.mainImageUrl = mainImageUrl;
@@ -132,8 +126,8 @@ export const processDataOriginals = async (originals: any) => {
     originals.docs.map(async (item: any) => {
       item.originals = await Promise.all(
         item.originals.map(async (original: any) => {
-          const mainImageUrl = buildImageUrl(original.thumbnail?.url);
-          const base64 = NEXT_PUBLIC_BASE_URL
+          const mainImageUrl = original.thumbnail?.url;
+          const base64 = mainImageUrl
             ? await getBase64(mainImageUrl)
             : base64Placeholder;
 

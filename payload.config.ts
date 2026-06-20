@@ -46,6 +46,10 @@ export default buildConfig({
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
   db: postgresAdapter({
+    // El schema se maneja con migraciones (src/migrations), no con dev push.
+    // Necesario porque el snapshot drizzle-kit con el export "/payload" ya no
+    // existe en npm; con push:false se evita esa dependencia.
+    push: false,
     pool: {
       connectionString: process.env.POSTGRES_URI ?? "",
     },
