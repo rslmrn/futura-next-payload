@@ -44,7 +44,7 @@ export const CatalogCollection: CollectionConfig = {
           await req.payload.update({
             collection: "cart",
             id: cart.id,
-            data: { items: remainingItems },
+            data: { items: remainingItems as any },
             req,
           });
         }
