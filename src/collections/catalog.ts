@@ -19,8 +19,44 @@ export const CatalogCollection: CollectionConfig = {
         return generateSlug(data);
       },
     ],
+    beforeDelete: [
+      // El campo `catalogItem` del carrito es `required` (columna NOT NULL),
+      // pero Payload crea su foreign key con ON DELETE SET NULL. Al borrar un
+      // producto que está en algún carrito, Postgres intenta poner NULL y viola
+      // el NOT NULL -> error 500. Aquí limpiamos esas referencias primero, en la
+      // misma transacción del delete.
+      async ({ req, id }) => {
+        const carts = await req.payload.find({
+          collection: "cart",
+          depth: 0,
+          limit: 1000,
+          where: { "items.catalogItem": { equals: id } },
+          req,
+        });
+
+        for (const cart of carts.docs) {
+          const remainingItems = (cart.items ?? []).filter((item: any) => {
+            const ci = item?.catalogItem;
+            const ciId = ci && typeof ci === "object" ? ci.id : ci;
+            return String(ciId) !== String(id);
+          });
+
+          await req.payload.update({
+            collection: "cart",
+            id: cart.id,
+            data: { items: remainingItems },
+            req,
+          });
+        }
+      },
+    ],
     afterChange: [
       ({ doc }) => {
+        revalidatePage("catalog");
+      },
+    ],
+    afterDelete: [
+      () => {
         revalidatePage("catalog");
       },
     ],
