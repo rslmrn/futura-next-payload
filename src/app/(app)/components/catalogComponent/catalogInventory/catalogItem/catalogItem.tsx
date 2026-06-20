@@ -2,7 +2,7 @@
 import { Box, Text, useToast } from "@chakra-ui/react";
 import { CatalogItemProps } from "./model";
 import Image from "next/image";
-import buy_me from "../../../../theme/designSystem/assets/buy-me.svg";
+import RentMeBadge from "./rentMeBadge";
 import { formatPrice } from "@/app/(app)/utils/utils";
 import { useStoreShoppingCart } from "@/app/(app)/lib/zustand/shoppingCartStore";
 import {
@@ -138,14 +138,7 @@ const CatalogItem: React.FC<CatalogItemProps> = ({ item }) => {
             userSelect="none"
             pointerEvents="none"
           >
-            <Image
-              src={buy_me}
-              alt="buy_me"
-              width={100}
-              height={100}
-              style={{ width: "100%", objectFit: "cover" }}
-              className="rotating"
-            />
+            <RentMeBadge />
           </Box>
         </Box>
       </Box>
